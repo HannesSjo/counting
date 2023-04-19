@@ -22,6 +22,12 @@ export const CountableRow = ({ countable, changeCounts, index }) => (
           changeCounts(-1, index);
         }}
       />
+      <CountButton
+        text="D"
+        submit={() => {
+          setIsVisible(false);
+        }}
+      />
     </View>
   </View>
 );

@@ -13,6 +13,8 @@ import { AddRow } from "./components/AddRow";
 import { CountableRow } from "./components/CountableRow";
 import { loadCountables, saveCountables } from "./storage/Storage";
 
+let names = [];
+
 const intialCountables = [
   { name: "Crow", count: 0 },
   { name: "Woodpecker", count: 3 },
@@ -27,13 +29,22 @@ export default function App() {
 
   const changeCounts = (amount, index) => {
     const newState = [...countables];
-    newState[index].count += amount;
-    setCountables(newState);
-    saveCountables(newState);
+    if (newState[index].count+amount >= 0){
+      newState[index].count += amount;
+      setCountables(newState);
+      saveCountables(newState);
+    }
   };
 
   const addNewCountable = (name) => {
+    if(names.includes(name) || name.length <= 0){
+      console.warn("Duplicate name detected or empty");
+      return;
+    }
+    names.push(name);
+  
     const newState = [...countables, { name, count: 0 }];
+    newState.sort((a, b) => a.name.localeCompare(b.name));
     setCountables(newState);
     saveCountables(newState);
   };
